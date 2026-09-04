@@ -32,17 +32,20 @@ export function getTypeIdFromTypeName(typeNameParam = "") {
   }
 
   // requestTypes is an array of objects imported from @data/requestTypes.js
-  // see if any of our known types are a substring of the input string
-  // (because Socrata API can return something this: "Illegal Dumping Pickup"
-  // which should match "Illegal Dumping")
+  // see if any of our known request type names are a substring of the input
+  // string. Match against both the app's display name and the official Socrata
+  // names (because Socrata API can return something like "Dead Animal Removal"
+  // or "Illegal Dumping Pickup", which should map to the corresponding type)
 
-  let subStr;
   const fullStr = removeSpaces(typeNameParam.toLowerCase().trim());
 
-  // search for subStr within fullStr
+  // search the input string within our known type names
   const requestObject = requestTypes.find((request) => {
-    subStr = removeSpaces(request.typeName.toLowerCase().trim());
-    return fullStr.indexOf(subStr) >= 0;
+    const knownNames = [request.typeName, ...(request.socrataNames || [])];
+    return knownNames.some((name) => {
+      const normalizedName = removeSpaces(name.toLowerCase().trim());
+      return fullStr.indexOf(normalizedName) >= 0;
+    });
   });
 
   // return the typeId of the request with matching typeNameParam or undefined if not found
