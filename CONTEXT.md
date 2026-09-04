@@ -24,7 +24,7 @@
 - map/filter/address-search area has in-flight work; avoid large data-pipeline refactors.
 
 ## Gap ledger (dedupe — READ FIRST, never re-pick)
-- 2026-09-04 self-found (utils) — `getTypeIdFromTypeName` fails to map official Socrata request-type names to typeIds. Verified in current upstream: live data.lacity.org 2025 dataset returns request types "Dead Animal Removal", "Metal/Household Appliances", "Multiple Streetlight Issue"; the function searches only app `typeName` (not `socrataNames`), so those return `undefined` instead of typeIds 3, 7, 9. Dedupe: no open/closed/merged upstream PR or issue touches getTypeIdFromTypeName/socrataNames/typeId/Dead Animal Removal. — status: picked (fix + regression test).
+- 2026-09-04 self-found (utils) — `getTypeIdFromTypeName` fails to map official Socrata request-type names to typeIds. Verified in current upstream: live data.lacity.org 2025 dataset returns request types "Dead Animal Removal", "Metal/Household Appliances", "Multiple Streetlight Issue"; the function searches only app `typeName` (not `socrataNames`), so those return `undefined` instead of typeIds 3, 7, 9. Dedupe: no open/closed/merged upstream PR or issue touches getTypeIdFromTypeName/socrataNames/typeId/Dead Animal Removal. — status: PR-OPENED 2026-09-04 https://github.com/olitreadwell/311-data/pull/1 (fork main -> fix/request-type-id-mapping; fix + regression test; local `npm test` green).
 
 ## Mined gaps (discovered, not yet attempted)
 - 2026-09-04 utils `transformCounts` / `createObjFromArrays` / `truncateName` have no unit tests (CONTRIBUTING asks for tests). — status: proposed (test-coverage candidate, lower priority than above).
